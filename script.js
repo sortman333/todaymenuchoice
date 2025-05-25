@@ -150,6 +150,8 @@ function selectMealTime(mealTime, isToday=false) {
     rerollCount = 0;
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById('menuRecommend').classList.add('active');
+    document.getElementById('menuRecommend').style.display = 'block';
+    document.getElementById('menuRecommend').scrollIntoView({ behavior: 'smooth' });
     const titles = { breakfast: '아침 메뉴 추천', lunch: '점심 메뉴 추천', dinner: '저녁 메뉴 추천' };
     document.getElementById('mealTimeTitle').textContent = isToday ? '오늘의 추천' : titles[mealTime];
     const menus = menuData[mealTime];

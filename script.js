@@ -162,6 +162,7 @@ function selectMealTime(mealTime, isToday=false) {
 // 이전 화면으로 돌아가기
 function goBack() {
     renderHome();
+    document.getElementById('mealTimeSelection').scrollIntoView({ behavior: 'smooth' });
 }
 
 // 메뉴 선택 함수
@@ -549,12 +550,13 @@ function generateMenuList(baseList, mealType) {
             tryCount++;
         } while (usedNames.has(n) && tryCount < 200);
         usedNames.add(n);
-        // 이모지 매핑 우선 적용
         const emoji = emojiMap[n] || emojis[i % emojis.length];
+        const rawPrice = 3000 + Math.floor(Math.random()*20000);
+        const price = Math.round(rawPrice / 100) * 100;
         result.push({
             name: n,
             calorie: 180 + Math.floor(Math.random()*900),
-            price: 3000 + Math.floor(Math.random()*20000),
+            price: price,
             time: `${5 + Math.floor(Math.random()*30)}분`,
             description: `귀엽고 든든한 ${n}로 ${descMap[mealType]}`,
             recipe: `1. 재료를 준비해요.\n2. 정성껏 조리해요.\n3. 맛있게 먹어요!`,

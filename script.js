@@ -333,6 +333,8 @@ function rerollMenu() {
 function showOtherMenus(sortType = null) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById('otherMenus').classList.add('active');
+    document.getElementById('otherMenus').style.display = 'block';
+    document.getElementById('otherMenus').scrollIntoView({ behavior: 'smooth' });
     let menus = menuData[currentMealTime];
     // 정렬 상태 토글
     if (sortType) {

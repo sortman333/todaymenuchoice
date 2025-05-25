@@ -459,8 +459,9 @@ body.dark .other-menu-btn {
 .fav-share-row {
     display: flex;
     justify-content: center;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
+    gap: 0.7rem;
+    margin-bottom: 1.2rem;
+    margin-top: 0.7rem;
 }
 
 .share-btn {
@@ -523,15 +524,12 @@ body.dark .fav-btn, body.dark .share-btn, body.dark .again-btn, body.dark .home-
     color: #ffb300;
     box-shadow: 0 4px 16px 0 rgba(255, 182, 193, 0.13);
 }
-.fav-share-row {
-    display: flex;
-    justify-content: center;
-    gap: 0.7rem;
-    margin-bottom: 1.2rem;
-    margin-top: 0.7rem;
+.recommend-card .again-btn {
+    margin-top: 1.5rem;
+    margin-bottom: 2.25rem;
 }
-.recommend-card {
-    margin-bottom: 2.2rem;
+.recommend-card .home-btn {
+    margin-top: 2.25rem;
 }
 #introScreen {
     display: flex;

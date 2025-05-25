@@ -478,6 +478,11 @@ function generateMenuList(baseList, mealType) {
         '치즈오믈렛','치즈프렌치토스트','치즈감자샐러드','치즈오트밀','치즈요거트볼','치즈크로와상','치즈베이컨샌드위치','치즈과일샐러드','치즈옥수수스프','치즈우유식빵',
         '치즈치아바타샌드위치','치즈에그마요샌드위치','치즈딸기잼토스트','치즈고구마구이','치즈바나나팬케이크','치즈베이컨샌드위치','치즈닭가슴살샐러드','치즈참치샐러드','치즈치킨텐더','치즈새우볶음밥'
     ];
+    const descMap = {
+        breakfast: '오늘을 시작해보세요!',
+        lunch: '든든하게 채워보세요!',
+        dinner: '오늘을 마무리해보세요!'
+    };
     const result = [...baseList];
     for (let i = baseList.length; i < 100; i++) {
         const n = names[(i + Math.floor(Math.random()*names.length)) % names.length];
@@ -487,7 +492,7 @@ function generateMenuList(baseList, mealType) {
             calorie: 180 + Math.floor(Math.random()*900),
             price: 3000 + Math.floor(Math.random()*20000),
             time: `${5 + Math.floor(Math.random()*30)}분`,
-            description: `귀엽고 든든한 ${n}로 오늘을 시작해보세요!`,
+            description: `귀엽고 든든한 ${n}로 ${descMap[mealType]}`,
             recipe: `1. 재료를 준비해요.\n2. 정성껏 조리해요.\n3. 맛있게 먹어요!`,
             image: emoji
         });

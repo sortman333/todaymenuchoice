@@ -541,10 +541,16 @@ menuData.dinner = generateMenuList(menuData.dinner, 'dinner');
 
 function startApp() {
     document.getElementById('introScreen').classList.remove('active');
+    document.getElementById('introScreen').style.display = 'none';
     document.getElementById('mealTimeSelection').classList.add('active');
+    document.getElementById('mealTimeSelection').style.display = 'block';
 }
 
 function goIntro() {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.screen').forEach(s => {
+        s.classList.remove('active');
+        s.style.display = 'none';
+    });
     document.getElementById('introScreen').classList.add('active');
+    document.getElementById('introScreen').style.display = 'flex';
 } 

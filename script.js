@@ -322,7 +322,51 @@ function todayRecommend() {
     selectMealTime(meal, true);
 }
 
-function renderRecommendCard(menu) {
+// TheMealDB에서 영어 레시피 가져오기
+async function fetchRecipeFromTheMealDB(menuName) {
+    const nameMap = {
+        '치킨텐더': 'Chicken Tender',
+        '샌드위치': 'Sandwich',
+        '오므라이스': 'Omelette Rice',
+        '토스트': 'Toast',
+        '파스타': 'Pasta',
+        '피자': 'Pizza',
+        '스테이크': 'Steak',
+        '샐러드': 'Salad',
+        '치킨': 'Chicken',
+        '햄버거': 'Hamburger',
+        '라면': 'Ramen',
+        '볶음밥': 'Fried Rice',
+        '오믈렛': 'Omelette',
+        '감자튀김': 'French Fries',
+        '치즈버거': 'Cheeseburger',
+        // 필요한 메뉴 추가
+    };
+    const query = nameMap[menuName] || menuName;
+    const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${encodeURIComponent(query)}`;
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        if (data.meals && data.meals.length > 0) {
+            return data.meals[0].strInstructions;
+        } else {
+            return null;
+        }
+    } catch (e) {
+        return null;
+    }
+}
+
+// Papago 번역 API 예시 (실제 서비스에서는 서버 프록시 필요, 여기선 예시만)
+async function translateToKorean(text) {
+    // 실제 서비스에서는 서버에서 번역 API 호출 필요
+    // 여기서는 fetch로는 불가하므로, 예시로만 작성
+    // return await fetch('/translate', { method: 'POST', body: JSON.stringify({text}) }) ...
+    return text; // 실제 배포시 서버 프록시 필요
+}
+
+// 메뉴 카드 렌더링 시 API 레시피 우선 적용
+async function renderRecommendCard(menu) {
     const card = document.getElementById('recommendCard');
     let rerollBtn = '';
     if (rerollCount < MAX_REROLL) {
@@ -335,20 +379,74 @@ function renderRecommendCard(menu) {
     const favBtn = `<button class="fav-btn" onclick="toggleFavorite(menuData[currentMealTime][currentMenuIndex])">${star} 즐겨찾기</button>`;
     // 공유 버튼
     const shareBtn = `<button class="share-btn" onclick="shareMenu(menuData[currentMealTime][currentMenuIndex])">🔗 공유</button>`;
-    card.innerHTML = `
-        <span class="menu-emoji">${menu.image}</span>
-        <div class="menu-name">${menu.name}</div>
-        <div class="menu-description">${menu.description}</div>
-        <div class="menu-detail-row"><span>칼로리</span><span>${menu.calorie}kcal</span></div>
-        <div class="menu-detail-row"><span>가격</span><span>${menu.price.toLocaleString()}원</span></div>
-        <div class="menu-detail-row"><span>제조시간</span><span>${menu.time}</span></div>
-        <div class="menu-recipe"><b>제조 방법</b><br>${menu.recipe}</div>
-        <div class="fav-share-row">${favBtn}${shareBtn}</div>
-        ${rerollBtn}
-        <button class="home-btn" onclick="renderHome()">홈으로</button>
-    `;
-    saveRecentMenu(menu);
-    animateCard(card);
+    // API 레시피 우선 적용
+    let recipeHtml = `<div class="menu-recipe"><b>제조 방법</b><br>${menu.recipe}</div>`;
+    if (menu.name in { '치킨텐더':1, '샌드위치':1, '오므라이스':1, '토스트':1, '파스타':1, '피자':1, '스테이크':1, '샐러드':1, '치킨':1, '햄버거':1, '라면':1, '볶음밥':1, '오믈렛':1, '감자튀김':1, '치즈버거':1 }) {
+        fetchRecipeFromTheMealDB(menu.name).then(async apiRecipe => {
+            if (apiRecipe) {
+                const korRecipe = await translateToKorean(apiRecipe);
+                card.innerHTML = `
+                    <span class="menu-emoji">${menu.image}</span>
+                    <div class="menu-name">${menu.name}</div>
+                    <div class="menu-description">${menu.description}</div>
+                    <div class="menu-detail-row"><span>칼로리</span><span>${menu.calorie}kcal</span></div>
+                    <div class="menu-detail-row"><span>가격</span><span>${menu.price.toLocaleString()}원</span></div>
+                    <div class="menu-detail-row"><span>제조시간</span><span>${menu.time}</span></div>
+                    <div class="menu-recipe"><b>제조 방법 (실제 레시피)</b><br>${korRecipe}</div>
+                    <div class="fav-share-row">${favBtn}${shareBtn}</div>
+                    ${rerollBtn}
+                    <button class="home-btn" onclick="renderHome()">홈으로</button>
+                `;
+                saveRecentMenu(menu);
+                animateCard(card);
+            } else {
+                card.innerHTML = `
+                    <span class="menu-emoji">${menu.image}</span>
+                    <div class="menu-name">${menu.name}</div>
+                    <div class="menu-description">${menu.description}</div>
+                    <div class="menu-detail-row"><span>칼로리</span><span>${menu.calorie}kcal</span></div>
+                    <div class="menu-detail-row"><span>가격</span><span>${menu.price.toLocaleString()}원</span></div>
+                    <div class="menu-detail-row"><span>제조시간</span><span>${menu.time}</span></div>
+                    ${recipeHtml}
+                    <div class="fav-share-row">${favBtn}${shareBtn}</div>
+                    ${rerollBtn}
+                    <button class="home-btn" onclick="renderHome()">홈으로</button>
+                `;
+                saveRecentMenu(menu);
+                animateCard(card);
+            }
+        });
+        // 임시로 기존 레시피 먼저 보여줌
+        card.innerHTML = `
+            <span class="menu-emoji">${menu.image}</span>
+            <div class="menu-name">${menu.name}</div>
+            <div class="menu-description">${menu.description}</div>
+            <div class="menu-detail-row"><span>칼로리</span><span>${menu.calorie}kcal</span></div>
+            <div class="menu-detail-row"><span>가격</span><span>${menu.price.toLocaleString()}원</span></div>
+            <div class="menu-detail-row"><span>제조시간</span><span>${menu.time}</span></div>
+            ${recipeHtml}
+            <div class="fav-share-row">${favBtn}${shareBtn}</div>
+            ${rerollBtn}
+            <button class="home-btn" onclick="renderHome()">홈으로</button>
+        `;
+        saveRecentMenu(menu);
+        animateCard(card);
+    } else {
+        card.innerHTML = `
+            <span class="menu-emoji">${menu.image}</span>
+            <div class="menu-name">${menu.name}</div>
+            <div class="menu-description">${menu.description}</div>
+            <div class="menu-detail-row"><span>칼로리</span><span>${menu.calorie}kcal</span></div>
+            <div class="menu-detail-row"><span>가격</span><span>${menu.price.toLocaleString()}원</span></div>
+            <div class="menu-detail-row"><span>제조시간</span><span>${menu.time}</span></div>
+            ${recipeHtml}
+            <div class="fav-share-row">${favBtn}${shareBtn}</div>
+            ${rerollBtn}
+            <button class="home-btn" onclick="renderHome()">홈으로</button>
+        `;
+        saveRecentMenu(menu);
+        animateCard(card);
+    }
 }
 
 function rerollMenu() {

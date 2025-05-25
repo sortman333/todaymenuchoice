@@ -91,7 +91,16 @@ const menuData = {
         { name: "제육볶음", calorie: 800, price: 9500, time: "14분", description: "매콤한 제육볶음과 밥", recipe: "1. 돼지고기를 양념에 재워 볶아주세요.", image: "🥓" },
         { name: "샤브샤브", calorie: 800, price: 12000, time: "20분", description: "신선한 야채와 고기가 어우러진 샤브샤브", recipe: "1. 고기와 야채를 육수에 살짝 익혀 드세요.", image: "🍲" },
         { name: "볶음밥", calorie: 600, price: 7000, time: "10분", description: "고슬고슬 볶음밥", recipe: "1. 밥과 야채, 고기를 함께 볶아주세요.", image: "🍚" },
-        { name: "우동", calorie: 550, price: 8000, time: "11분", description: "쫄깃한 면발의 우동", recipe: "1. 우동면을 삶고 국물과 함께 드세요.", image: "🍜" }
+        { name: "우동", calorie: 550, price: 8000, time: "11분", description: "쫄깃한 면발의 우동", recipe: "1. 우동면을 삶고 국물과 함께 드세요.", image: "🍜" },
+        {
+            name: "공기",
+            calorie: 0,
+            price: 0,
+            time: "0분",
+            description: "숨을 깊게 들이마시고 돈을 아끼며 살을 빼보세요",
+            recipe: "숨을 깊게 들이마시고 돈을 아끼며 살을 빼보세요",
+            image: "💨"
+        }
     ],
     dinner: [
         { name: "스테이크", calorie: 850, price: 25000, time: "25분", description: "부드러운 육즙이 가득한 스테이크", recipe: "1. 소고기를 소금, 후추로 간하고 구워주세요.\n2. 소스를 곁들여 드세요.", image: "🥩" },
@@ -113,7 +122,16 @@ const menuData = {
         { name: "부대찌개", calorie: 1100, price: 14000, time: "20분", description: "햄과 소시지가 듬뿍!", recipe: "1. 햄, 소시지, 야채를 넣고 끓이세요.", image: "🍲" },
         { name: "쭈꾸미볶음", calorie: 650, price: 13000, time: "14분", description: "매콤한 쭈꾸미볶음과 밥", recipe: "1. 쭈꾸미와 야채를 양념에 볶으세요.", image: "🦑" },
         { name: "닭볶음탕", calorie: 950, price: 16000, time: "25분", description: "얼큰한 닭볶음탕", recipe: "1. 닭고기와 감자, 당근을 양념에 넣고 끓이세요.", image: "🍗" },
-        { name: "연어스테이크", calorie: 700, price: 20000, time: "15분", description: "고소한 연어스테이크와 샐러드", recipe: "1. 연어를 소금, 후추로 간해 구워주세요.", image: "🐟" }
+        { name: "연어스테이크", calorie: 700, price: 20000, time: "15분", description: "고소한 연어스테이크와 샐러드", recipe: "1. 연어를 소금, 후추로 간해 구워주세요.", image: "🐟" },
+        {
+            name: "공기",
+            calorie: 0,
+            price: 0,
+            time: "0분",
+            description: "숨을 깊게 들이마시고 돈을 아끼며 살을 빼보세요",
+            recipe: "숨을 깊게 들이마시고 돈을 아끼며 살을 빼보세요",
+            image: "💨"
+        }
     ]
 };
 

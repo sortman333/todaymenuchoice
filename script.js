@@ -678,6 +678,21 @@ function generateMenuList(baseList, mealType) {
         // 기본값: 랜덤 귀여운 문구
         return recipePatterns[Math.floor(Math.random() * recipePatterns.length)];
     }
+    function getPriceByName(name) {
+        if (/(스테이크|갈비찜|연어스테이크|랍스터|장어|한우|등심|안심|티본|꽃등심|랍스터파스타)/.test(name)) {
+            return 15000 + Math.round(Math.random() * 15000 / 100) * 100; // 15000~30000
+        } else if (/(피자|파스타|치킨|삼겹살|곱창|곱창전골|샤브샤브|회덮밥|감자탕|부대찌개|쭈꾸미|닭갈비|닭볶음탕|불고기)/.test(name)) {
+            return 9000 + Math.round(Math.random() * 11000 / 100) * 100; // 9000~20000
+        } else if (/(샌드위치|토스트|오트밀|시리얼|우유식빵|크로와상|요거트볼|프렌치토스트|베이컨에그머핀|딸기잼토스트|바나나팬케이크)/.test(name)) {
+            return 3000 + Math.round(Math.random() * 4000 / 100) * 100; // 3000~7000
+        } else if (/(김밥|라면|우동|떡볶이|순두부찌개|감자샐러드|고구마구이|옥수수스프)/.test(name)) {
+            return 3000 + Math.round(Math.random() * 3000 / 100) * 100; // 3000~6000
+        } else if (/(샐러드|볶음밥|오므라이스|카레|잡채|쌀국수)/.test(name)) {
+            return 5000 + Math.round(Math.random() * 7000 / 100) * 100; // 5000~12000
+        } else {
+            return 4000 + Math.round(Math.random() * 11000 / 100) * 100; // 4000~15000
+        }
+    }
     const result = [...baseList];
     let usedNames = new Set(baseList.map(m => m.name));
     for (let i = baseList.length; i < 100; i++) {
@@ -689,8 +704,7 @@ function generateMenuList(baseList, mealType) {
         } while (usedNames.has(n) && tryCount < 200);
         usedNames.add(n);
         const emoji = emojiMap[n] || emojis[i % emojis.length];
-        const rawPrice = 3000 + Math.floor(Math.random()*20000);
-        const price = Math.round(rawPrice / 100) * 100;
+        const price = getPriceByName(n);
         result.push({
             name: n,
             calorie: 180 + Math.floor(Math.random()*900),

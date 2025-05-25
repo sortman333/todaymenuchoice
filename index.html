@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>오늘의 메뉴 선택</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
+        <button id="darkModeBtn" class="darkmode-btn" onclick="toggleDarkMode()" title="다크모드 전환">🌙</button>
         <div id="mealTimeSelection" class="screen active">
             <h1>언제 식사하실 예정인가요?</h1>
             <div class="meal-buttons">
@@ -27,39 +28,24 @@
             </div>
         </div>
 
-        <div id="menuSelection" class="screen">
+        <div id="menuRecommend" class="screen">
             <div class="header">
                 <button onclick="goBack()" class="back-button">←</button>
-                <h2 id="mealTimeTitle">메뉴 선택</h2>
+                <h2 id="mealTimeTitle">메뉴 추천</h2>
             </div>
-            <div class="menu-container">
-                <div class="menu-list">
-                    <ul id="menuList"></ul>
-                </div>
-                <div class="result-container">
-                    <h3>추천 메뉴</h3>
-                    <div id="result" class="result">
-                        <div class="result-placeholder">?</div>
-                    </div>
-                    <div id="menuDetails" class="menu-details">
-                        <div class="detail-item">
-                            <span class="detail-label">칼로리</span>
-                            <span id="resultCalorie" class="detail-value">-</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-label">가격</span>
-                            <span id="resultPrice" class="detail-value">-</span>
-                        </div>
-                        <div class="detail-item">
-                            <span class="detail-label">조리시간</span>
-                            <span id="resultTime" class="detail-value">-</span>
-                        </div>
-                        <div class="detail-item description">
-                            <span id="resultDescription" class="detail-value">-</span>
-                        </div>
-                    </div>
-                    <button onclick="selectMenu()" class="select-button">메뉴 선택하기</button>
-                </div>
+            <div class="recommend-card" id="recommendCard">
+                <!-- JS로 추천 메뉴 정보 렌더링 -->
+            </div>
+            <button onclick="showOtherMenus()" class="other-menu-btn">이 음식이 싫어요! 다른 음식은 어떤가요?</button>
+        </div>
+
+        <div id="otherMenus" class="screen">
+            <div class="header">
+                <button onclick="backToRecommend()" class="back-button">←</button>
+                <h2>다른 추천 메뉴</h2>
+            </div>
+            <div class="other-menu-list" id="otherMenuList">
+                <!-- JS로 나머지 메뉴 카드 렌더링 -->
             </div>
         </div>
     </div>

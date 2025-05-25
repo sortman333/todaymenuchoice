@@ -18,7 +18,10 @@
         </div>
 
         <div id="mealTimeSelection" class="screen">
-            <button onclick="goIntro()" class="home-btn" style="position:absolute; top:24px; left:24px; z-index:11;">🏠</button>
+            <div style="position:absolute; top:24px; left:24px; z-index:11; display:flex; gap:0.5rem;">
+                <button onclick="goHome()" class="home-btn">🏠</button>
+                <button onclick="showFavoritesScreen()" class="fav-btn" style="font-size:1.3rem; padding:0.6rem 1.1rem;">⭐ 즐겨찾기 전체 보기</button>
+            </div>
             <h1>언제 식사하실 예정인가요?</h1>
             <div class="meal-buttons">
                 <button onclick="selectMealTime('breakfast')" class="meal-button">
@@ -34,6 +37,14 @@
                     <span class="meal-text">저녁</span>
                 </button>
             </div>
+        </div>
+
+        <div id="favoritesScreen" class="screen">
+            <div class="header">
+                <button onclick="goHome()" class="home-btn">🏠 홈으로</button>
+                <h2 style="margin-left:0.5rem; color:var(--text-accent);">⭐ 즐겨찾기 전체 리스트</h2>
+            </div>
+            <div id="favoritesList" class="other-menu-list"></div>
         </div>
 
         <div id="menuRecommend" class="screen">

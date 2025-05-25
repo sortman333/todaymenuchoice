@@ -60,7 +60,16 @@ const menuData = {
         { name: "치아바타 샌드위치", calorie: 360, price: 5000, time: "12분", description: "쫄깃한 치아바타와 신선한 채소", recipe: "1. 치아바타에 채소와 햄을 넣어 샌드위치를 만드세요.", image: "🥪" },
         { name: "베이컨 에그머핀", calorie: 390, price: 5500, time: "10분", description: "베이컨과 계란의 완벽한 조화", recipe: "1. 머핀에 베이컨과 계란을 올려주세요.", image: "🥯" },
         { name: "과일샐러드", calorie: 220, price: 4500, time: "6분", description: "상큼한 과일이 듬뿍!", recipe: "1. 여러 가지 과일을 깍둑썰기 해 섞으세요.", image: "🍎" },
-        { name: "옥수수스프", calorie: 250, price: 4000, time: "8분", description: "달콤한 옥수수스프 한 그릇", recipe: "1. 옥수수와 우유를 끓여 믹서에 갈아주세요.", image: "🌽" }
+        { name: "옥수수스프", calorie: 250, price: 4000, time: "8분", description: "달콤한 옥수수스프 한 그릇", recipe: "1. 옥수수와 우유를 끓여 믹서에 갈아주세요.", image: "🌽" },
+        {
+            name: "공기",
+            calorie: 0,
+            price: 0,
+            time: "0분",
+            description: "숨을 깊게 들이마시고 돈을 아끼며 살을 빼보세요",
+            recipe: "숨을 깊게 들이마시고 돈을 아끼며 살을 빼보세요",
+            image: "💨"
+        }
     ],
     lunch: [
         { name: "비빔밥", calorie: 650, price: 8000, time: "15분", description: "다양한 나물과 고소한 참기름이 어우러진 건강식", recipe: "1. 밥 위에 나물, 고기, 계란을 올리고 고추장과 참기름을 넣어 비벼주세요.", image: "🍚" },
@@ -161,8 +170,20 @@ function selectMealTime(mealTime, isToday=false) {
 
 // 이전 화면으로 돌아가기
 function goBack() {
-    renderHome();
-    document.getElementById('mealTimeSelection').scrollIntoView({ behavior: 'smooth' });
+    const currentScreen = document.querySelector('.screen.active');
+    if (currentScreen.id === 'menuRecommend') {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById('mealTimeSelection').classList.add('active');
+    } else if (currentScreen.id === 'otherMenus') {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById('menuRecommend').classList.add('active');
+    }
+}
+
+// 홈으로 가기
+function goHome() {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('mealTimeSelection').classList.add('active');
 }
 
 // 메뉴 선택 함수
@@ -586,4 +607,134 @@ function goIntro() {
     });
     document.getElementById('introScreen').classList.add('active');
     document.getElementById('introScreen').style.display = 'flex';
+}
+
+// --- 즐겨찾기 전체 보기 화면 ---
+function showFavoritesScreen() {
+    const favWindow = window.open('', 'favorites', 'width=420,height=800,left=100,top=100');
+    if (!favWindow) {
+        showToast('팝업이 차단되었어요. 팝업 차단을 해제해주세요!');
+        return;
+    }
+
+    favWindow.document.write(`
+        <!DOCTYPE html>
+        <html lang="ko">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>즐겨찾기 메뉴</title>
+            <link rel="stylesheet" href="styles.css">
+            <link href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&display=swap" rel="stylesheet">
+            <style>
+                body { margin: 0; padding: 0; }
+                .favorites-container {
+                    max-width: 420px;
+                    width: 100%;
+                    min-height: 100vh;
+                    background: var(--bg-card);
+                    border-radius: 32px;
+                    box-shadow: var(--shadow);
+                    position: relative;
+                    padding: 2rem 1.2rem 1rem 1.2rem;
+                }
+                .favorites-header {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 1.5rem;
+                    gap: 0.5rem;
+                }
+                .favorites-title {
+                    font-size: 1.5rem;
+                    color: var(--text-accent);
+                    margin: 0;
+                }
+                .favorites-list {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 1.2rem;
+                    justify-content: center;
+                }
+                .favorite-card {
+                    background: var(--bg-card);
+                    border-radius: 24px;
+                    box-shadow: var(--shadow-card);
+                    padding: 1.2rem 1rem 1rem 1rem;
+                    width: 160px;
+                    text-align: center;
+                    margin-bottom: 0.5rem;
+                    transition: box-shadow 0.2s, transform 0.2s, background 0.3s;
+                    color: var(--text-main);
+                }
+                .favorite-card:hover {
+                    box-shadow: 0 6px 24px 0 rgba(123, 95, 192, 0.18);
+                    transform: translateY(-4px) scale(1.04);
+                }
+                .close-btn {
+                    background: var(--bg-btn);
+                    border: none;
+                    border-radius: 18px;
+                    font-size: 1.08rem;
+                    font-weight: 600;
+                    color: var(--text-accent);
+                    padding: 0.6rem 1.2rem;
+                    margin: 0.2rem 0.3rem;
+                    box-shadow: var(--shadow-btn);
+                    cursor: pointer;
+                    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+                }
+                .close-btn:hover {
+                    background: var(--bg-btn-hover);
+                    color: #ffb300;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="favorites-container">
+                <div class="favorites-header">
+                    <h2 class="favorites-title">⭐ 즐겨찾기 전체 리스트</h2>
+                </div>
+                <div class="favorites-list" id="favoritesList"></div>
+                <button class="close-btn" onclick="window.close()">창 닫기</button>
+            </div>
+            <script>
+                // 다크모드 설정 복사
+                if (window.opener.document.body.classList.contains('dark')) {
+                    document.body.classList.add('dark');
+                }
+
+                // 즐겨찾기 데이터 로드
+                const favs = JSON.parse(localStorage.getItem('favoriteMenus') || '[]');
+                const list = document.getElementById('favoritesList');
+                
+                if (favs.length === 0) {
+                    list.innerHTML = '<div style="text-align:center; color:var(--text-soft); font-size:1.1rem; margin-top:2rem;">아직 즐겨찾기한 메뉴가 없어요!<br>⭐ 버튼을 눌러 추가해보세요.</div>';
+                } else {
+                    favs.forEach((item, idx) => {
+                        const card = document.createElement('div');
+                        card.className = 'favorite-card';
+                        card.innerHTML = \`
+                            <span class="menu-emoji">\${item.image}</span>
+                            <div class="menu-name">\${item.name}</div>
+                            <div class="menu-description">\${item.description || ''}</div>
+                            <div class="menu-detail-row">\${item.calorie}kcal · \${item.price.toLocaleString()}원</div>
+                            <div class="menu-meal" style="color:var(--text-accent); font-size:0.98rem; margin-bottom:0.3rem;">\${item.meal === 'breakfast' ? '아침' : item.meal === 'lunch' ? '점심' : '저녁'}</div>
+                            <button class="fav-btn" onclick="removeFavorite(\${idx})">⭐ 해제</button>
+                        \`;
+                        list.appendChild(card);
+                    });
+                }
+
+                function removeFavorite(idx) {
+                    let favs = JSON.parse(localStorage.getItem('favoriteMenus') || '[]');
+                    favs.splice(idx, 1);
+                    localStorage.setItem('favoriteMenus', JSON.stringify(favs));
+                    window.opener.showToast('즐겨찾기에서 제거했어요!');
+                    window.location.reload();
+                }
+            </script>
+        </body>
+        </html>
+    `);
+    favWindow.document.close();
 } 

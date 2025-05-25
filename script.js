@@ -490,6 +490,33 @@ function copyToClipboard(text) {
 
 // --- 메뉴 데이터 100개씩 자동 생성 ---
 function generateMenuList(baseList, mealType) {
+    const emojiMap = {
+        '김치찌개': '🍲', '된장찌개': '🍲', '부대찌개': '🍲', '순두부찌개': '🍲',
+        '돈까스': '🥩', '스테이크': '🥩', '불고기': '🥩', '삼겹살': '🥓',
+        '피자': '🍕', '햄버거': '🍔', '샌드위치': '🥪', '토스트': '🍞',
+        '시리얼': '🥣', '오트밀': '🥣', '샐러드': '🥗', '파스타': '🍝',
+        '쌀국수': '🍜', '라면': '🍜', '우동': '🍜', '카레라이스': '🍛',
+        '김밥': '🍙', '볶음밥': '🍚', '오므라이스': '🍳', '계란말이': '🍳',
+        '치킨': '🍗', '치킨마요덮밥': '🍗', '닭갈비': '🍗', '닭볶음탕': '🍗',
+        '회덮밥': '🍣', '연어스테이크': '🐟', '새우볶음밥': '🍤',
+        '감자샐러드': '🥔', '고구마구이': '🍠', '옥수수스프': '🌽',
+        '크로와상': '🥐', '팬케이크': '🥞', '프렌치토스트': '🍞',
+        '떡볶이': '🍢', '잡채': '🍝', '해물파전': '🥞',
+        '과일샐러드': '🍎', '요거트볼': '🍧', '우유식빵': '🍞',
+        '치즈오믈렛': '🍳', '치즈돈까스': '🥩', '치즈피자': '🍕',
+        '치즈라면': '🍜', '치즈김밥': '🍙', '치즈떡볶이': '🍢',
+        '치즈버거': '🍔', '베이컨버거': '🍔', '불닭볶음면': '🌶️',
+        '참치김치찌개': '🍲', '곱창전골': '🍲', '갈비찜': '🍖',
+        '오징어볶음': '🦑', '쭈꾸미볶음': '🦑', '감자탕': '🍲',
+        '딸기잼토스트': '🍓', '바나나팬케이크': '🍌', '샤브샤브': '🍲',
+        '치즈스테이크': '🥩', '치즈샌드위치': '🥪', '치즈프렌치토스트': '🍞',
+        '치즈감자샐러드': '🥔', '치즈오트밀': '🥣', '치즈요거트볼': '🍧',
+        '치즈크로와상': '🥐', '치즈베이컨샌드위치': '🥪', '치즈과일샐러드': '🍎',
+        '치즈옥수수스프': '🌽', '치즈우유식빵': '🍞', '치즈치아바타샌드위치': '🥪',
+        '치즈에그마요샌드위치': '🥪', '치즈딸기잼토스트': '🍓', '치즈고구마구이': '🍠',
+        '치즈바나나팬케이크': '🍌', '치즈닭가슴살샐러드': '🥗', '치즈참치샐러드': '🥗',
+        '치즈치킨텐더': '🍗', '치즈새우볶음밥': '🍤'
+    };
     const emojis = mealType === 'breakfast' ? ['🥪','🍞','🥣','🍳','🥗','🥞','🍧','🥐','🥯','🍓','🍠','🍎','🌽','🥛','🧀','🍫','🍊','🍋','🍒','🍉']
         : mealType === 'lunch' ? ['🍚','🍝','🥗','🍔','🥪','🍲','🥩','🍜','🍛','🍗','🍙','🍢','🍳','🥓','🍕','🍟','🌮','🥟','🍤','🍱']
         : ['🥩','🥓','🍗','🍕','🍲','🍖','🍣','🦑','🍞','🍜','🍛','🍚','🍤','🍟','🍝','🍳','🍠','🍚','🍢','🍗'];
@@ -520,7 +547,8 @@ function generateMenuList(baseList, mealType) {
             tryCount++;
         } while (usedNames.has(n) && tryCount < 200);
         usedNames.add(n);
-        const emoji = emojis[i % emojis.length];
+        // 이모지 매핑 우선 적용
+        const emoji = emojiMap[n] || emojis[i % emojis.length];
         result.push({
             name: n,
             calorie: 180 + Math.floor(Math.random()*900),
@@ -540,10 +568,9 @@ menuData.lunch = generateMenuList(menuData.lunch, 'lunch');
 menuData.dinner = generateMenuList(menuData.dinner, 'dinner');
 
 function startApp() {
-    document.getElementById('introScreen').classList.remove('active');
-    document.getElementById('introScreen').style.display = 'none';
     document.getElementById('mealTimeSelection').classList.add('active');
     document.getElementById('mealTimeSelection').style.display = 'block';
+    document.getElementById('mealTimeSelection').scrollIntoView({ behavior: 'smooth' });
 }
 
 function goIntro() {

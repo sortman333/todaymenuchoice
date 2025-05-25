@@ -324,12 +324,22 @@ function rerollMenu() {
 }
 
 // --- 다른 메뉴 리스트 ---
-function showOtherMenus() {
+function showOtherMenus(sortType = null) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById('otherMenus').classList.add('active');
-    const menus = menuData[currentMealTime];
+    let menus = menuData[currentMealTime];
+    // 정렬
+    if (sortType === 'price') {
+        menus = [...menus].sort((a, b) => a.price - b.price);
+    } else if (sortType === 'calorie') {
+        menus = [...menus].sort((a, b) => a.calorie - b.calorie);
+    }
     const list = document.getElementById('otherMenuList');
     list.innerHTML = '';
+    // 정렬 버튼 UI
+    const sortUI = `<div class="sort-row"><button class="sort-btn" onclick="showOtherMenus('price')">💸 가격순</button><button class="sort-btn" onclick="showOtherMenus('calorie')">🔥 칼로리순</button></div>`;
+    list.insertAdjacentHTML('beforebegin', sortUI);
+    // 카드 리스트
     menus.forEach((menu, idx) => {
         if (idx !== currentMenuIndex) {
             const card = document.createElement('div');
@@ -484,8 +494,15 @@ function generateMenuList(baseList, mealType) {
         dinner: '오늘을 마무리해보세요!'
     };
     const result = [...baseList];
+    let usedNames = new Set(baseList.map(m => m.name));
     for (let i = baseList.length; i < 100; i++) {
-        const n = names[(i + Math.floor(Math.random()*names.length)) % names.length];
+        let n;
+        let tryCount = 0;
+        do {
+            n = names[(i + Math.floor(Math.random()*names.length)) % names.length];
+            tryCount++;
+        } while (usedNames.has(n) && tryCount < 200);
+        usedNames.add(n);
         const emoji = emojis[i % emojis.length];
         result.push({
             name: n,

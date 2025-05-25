@@ -460,8 +460,8 @@ body.dark .other-menu-btn {
     display: flex;
     justify-content: center;
     gap: 0.7rem;
-    margin-bottom: 1.2rem;
-    margin-top: 0.7rem;
+    margin-bottom: 1.5rem;
+    margin-top: 0;
 }
 
 .share-btn {
@@ -526,10 +526,10 @@ body.dark .fav-btn, body.dark .share-btn, body.dark .again-btn, body.dark .home-
 }
 .recommend-card .again-btn {
     margin-top: 1.5rem;
-    margin-bottom: 2.25rem;
+    margin-bottom: 0;
 }
 .recommend-card .home-btn {
-    margin-top: 2.25rem;
+    margin-top: 1.5rem;
 }
 #introScreen {
     display: flex;

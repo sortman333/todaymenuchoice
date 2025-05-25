@@ -675,4 +675,43 @@ body.dark .sort-btn {
     50% {
         transform: translateY(-8px);
     }
+}
+
+.home-btn, .fav-btn, .darkmode-btn {
+    min-width: 36px;
+    min-height: 36px;
+    height: 38px;
+    padding: 0.3rem 0.8rem;
+    font-size: 1.1rem;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.darkmode-btn {
+    font-size: 1.15rem;
+    padding: 0.3rem 0.7rem;
+    height: 38px;
+    min-width: 36px;
+    min-height: 36px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.fav-btn {
+    font-size: 1.08rem;
+    padding: 0.3rem 0.9rem;
+    height: 38px;
+    min-width: 36px;
+    min-height: 36px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
 } 

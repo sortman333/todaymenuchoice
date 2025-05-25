@@ -121,6 +121,9 @@ let currentMenuIndex = null;
 let rerollCount = 0;
 const MAX_REROLL = 3;
 
+// 정렬 상태 저장
+let sortState = { type: null, order: 'asc' };
+
 // 페이지 로드 시 메뉴 데이터 초기화
 window.onload = function() {
     let savedMenus = localStorage.getItem('menus');
@@ -328,16 +331,30 @@ function showOtherMenus(sortType = null) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById('otherMenus').classList.add('active');
     let menus = menuData[currentMealTime];
+    // 정렬 상태 토글
+    if (sortType) {
+        if (sortState.type === sortType) {
+            sortState.order = sortState.order === 'asc' ? 'desc' : 'asc';
+        } else {
+            sortState.type = sortType;
+            sortState.order = 'asc';
+        }
+    }
     // 정렬
-    if (sortType === 'price') {
-        menus = [...menus].sort((a, b) => a.price - b.price);
-    } else if (sortType === 'calorie') {
-        menus = [...menus].sort((a, b) => a.calorie - b.calorie);
+    if (sortState.type === 'price') {
+        menus = [...menus].sort((a, b) => sortState.order === 'asc' ? a.price - b.price : b.price - a.price);
+    } else if (sortState.type === 'calorie') {
+        menus = [...menus].sort((a, b) => sortState.order === 'asc' ? a.calorie - b.calorie : b.calorie - a.calorie);
     }
     const list = document.getElementById('otherMenuList');
     list.innerHTML = '';
+    // 기존 sort-row 제거
+    const oldSort = document.querySelector('.sort-row');
+    if (oldSort) oldSort.remove();
     // 정렬 버튼 UI
-    const sortUI = `<div class="sort-row"><button class="sort-btn" onclick="showOtherMenus('price')">💸 가격순</button><button class="sort-btn" onclick="showOtherMenus('calorie')">🔥 칼로리순</button></div>`;
+    const priceArrow = sortState.type === 'price' ? (sortState.order === 'asc' ? '▲' : '▼') : '';
+    const calArrow = sortState.type === 'calorie' ? (sortState.order === 'asc' ? '▲' : '▼') : '';
+    const sortUI = `<div class="sort-row"><button class="sort-btn" onclick="showOtherMenus('price')">💸 가격순 ${priceArrow}</button><button class="sort-btn" onclick="showOtherMenus('calorie')">🔥 칼로리순 ${calArrow}</button></div>`;
     list.insertAdjacentHTML('beforebegin', sortUI);
     // 카드 리스트
     menus.forEach((menu, idx) => {
@@ -523,6 +540,11 @@ menuData.lunch = generateMenuList(menuData.lunch, 'lunch');
 menuData.dinner = generateMenuList(menuData.dinner, 'dinner');
 
 function startApp() {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('introScreen').classList.remove('active');
     document.getElementById('mealTimeSelection').classList.add('active');
+}
+
+function goIntro() {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('introScreen').classList.add('active');
 } 

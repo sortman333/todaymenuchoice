@@ -406,7 +406,7 @@ async function renderRecommendCard(menu) {
         <div class="menu-detail-row"><span>제조시간</span><span>${menu.time}</span></div>
         <div class="fav-share-row">${favBtn}${shareBtn}</div>
         ${rerollBtn}
-        <button class="home-btn" onclick="renderHome()">홈으로</button>
+        <button class="home-btn" onclick="goBack()">홈으로</button>
     `;
     saveRecentMenu(menu);
     animateCard(card);

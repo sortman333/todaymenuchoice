@@ -857,6 +857,23 @@ function showFavoritesScreen() {
                     background: var(--bg-btn-hover);
                     color: #ffb300;
                 }
+                .clear-btn {
+                    background: #ffe0e0;
+                    border: none;
+                    border-radius: 18px;
+                    font-size: 1.08rem;
+                    font-weight: 600;
+                    color: #e57373;
+                    padding: 0.6rem 1.2rem;
+                    margin: 0.2rem 0.3rem;
+                    box-shadow: var(--shadow-btn);
+                    cursor: pointer;
+                    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+                }
+                .clear-btn:hover {
+                    background: #ffb3b3;
+                    color: #b71c1c;
+                }
             </style>
         </head>
         <body>
@@ -864,6 +881,7 @@ function showFavoritesScreen() {
                 <div class="favorites-header">
                     <button class="close-btn" onclick="window.opener.scrollTo(0,0); window.close()">← 뒤로가기</button>
                     <h2 class="favorites-title">⭐ 즐겨찾기 전체 리스트</h2>
+                    <button class="clear-btn" onclick="clearAllFavorites()">모두 해제</button>
                 </div>
                 <div class="favorites-list" id="favoritesList"></div>
             </div>
@@ -900,6 +918,11 @@ function showFavoritesScreen() {
                     favs.splice(idx, 1);
                     localStorage.setItem('favoriteMenus', JSON.stringify(favs));
                     window.opener.showToast('즐겨찾기에서 제거했어요!');
+                    window.location.reload();
+                }
+                function clearAllFavorites() {
+                    localStorage.setItem('favoriteMenus', '[]');
+                    window.opener.showToast('모든 즐겨찾기를 해제했어요!');
                     window.location.reload();
                 }
             </script>

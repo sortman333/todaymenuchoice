@@ -163,9 +163,26 @@ function selectMealTime(mealTime, isToday=false) {
     document.getElementById('menuRecommend').scrollIntoView({ behavior: 'smooth' });
     const titles = { breakfast: '아침 메뉴 추천', lunch: '점심 메뉴 추천', dinner: '저녁 메뉴 추천' };
     document.getElementById('mealTimeTitle').textContent = isToday ? '오늘의 추천' : titles[mealTime];
-    const menus = menuData[mealTime];
-    currentMenuIndex = pickRandomIndex(menus);
-    renderRecommendCard(menus[currentMenuIndex]);
+    
+    // 로딩 화면 표시
+    const card = document.getElementById('recommendCard');
+    card.innerHTML = `
+        <div class="loading-container">
+            <div class="loading-text">두구두구...</div>
+            <div class="loading-dots">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </div>
+    `;
+
+    // 2초 후에 메뉴 표시
+    setTimeout(() => {
+        const menus = menuData[mealTime];
+        currentMenuIndex = pickRandomIndex(menus);
+        renderRecommendCard(menus[currentMenuIndex]);
+    }, 2000);
 }
 
 // 이전 화면으로 돌아가기
@@ -692,10 +709,10 @@ function showFavoritesScreen() {
         <body>
             <div class="favorites-container">
                 <div class="favorites-header">
+                    <button class="close-btn" onclick="window.close()">← 뒤로가기</button>
                     <h2 class="favorites-title">⭐ 즐겨찾기 전체 리스트</h2>
                 </div>
                 <div class="favorites-list" id="favoritesList"></div>
-                <button class="close-btn" onclick="window.close()">창 닫기</button>
             </div>
             <script>
                 // 다크모드 설정 복사

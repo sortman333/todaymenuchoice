@@ -123,14 +123,22 @@ const MAX_REROLL = 3;
 
 // 페이지 로드 시 메뉴 데이터 초기화
 window.onload = function() {
-    // 로컬 스토리지에서 저장된 메뉴가 있는지 확인
-    const savedMenus = localStorage.getItem('menus');
-    if (!savedMenus) {
-        // 저장된 메뉴가 없으면 기본 메뉴 데이터 저장
+    let savedMenus = localStorage.getItem('menus');
+    let needInit = false;
+    try {
+        const parsed = JSON.parse(savedMenus);
+        if (!parsed || !parsed.breakfast || !parsed.lunch || !parsed.dinner ||
+            parsed.breakfast.length < 100 || parsed.lunch.length < 100 || parsed.dinner.length < 100) {
+            needInit = true;
+        }
+    } catch { needInit = true; }
+    if (!savedMenus || needInit) {
         localStorage.setItem('menus', JSON.stringify(menuData));
     }
+    // 인트로만 active, 나머지 비활성화
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('introScreen').classList.add('active');
     restoreDarkMode();
-    renderHome();
 };
 
 // 식사 시간대 선택 함수
@@ -472,7 +480,7 @@ function generateMenuList(baseList, mealType) {
     ];
     const result = [...baseList];
     for (let i = baseList.length; i < 100; i++) {
-        const n = names[(i + Math.floor(Math.random()*names.length)) % names.length] + (i+1);
+        const n = names[(i + Math.floor(Math.random()*names.length)) % names.length];
         const emoji = emojis[i % emojis.length];
         result.push({
             name: n,
@@ -490,4 +498,9 @@ function generateMenuList(baseList, mealType) {
 // 기존 baseList(20개) 유지, 100개로 확장
 menuData.breakfast = generateMenuList(menuData.breakfast, 'breakfast');
 menuData.lunch = generateMenuList(menuData.lunch, 'lunch');
-menuData.dinner = generateMenuList(menuData.dinner, 'dinner'); 
+menuData.dinner = generateMenuList(menuData.dinner, 'dinner');
+
+function startApp() {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('mealTimeSelection').classList.add('active');
+} 

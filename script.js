@@ -195,7 +195,7 @@ function goBack() {
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
         document.getElementById('menuRecommend').classList.add('active');
     }
-    window.scrollTo(0, 0); // 뒤로가기 시 항상 맨 위로 이동
+    window.scrollTo({ top: 0, behavior: 'smooth' }); // 부드럽게 맨 위로 이동
 }
 
 // 홈으로 가기
@@ -581,6 +581,60 @@ function generateMenuList(baseList, mealType) {
         lunch: '든든하게 채워보세요!',
         dinner: '오늘을 마무리해보세요!'
     };
+    // --- 레시피 패턴 ---
+    const recipePatterns = [
+        '1. 신선한 재료를 준비해요.\n2. 사랑을 담아 조리해요.\n3. 예쁘게 플레이팅해서 먹어요!',
+        '1. 재료를 쏙쏙 썰어요.\n2. 맛있게 볶거나 끓여요.\n3. 한입 먹고 미소 지어요!',
+        '1. 재료를 깨끗이 씻어요.\n2. 황금비율로 양념해요.\n3. 따뜻할 때 먹어요!',
+        '1. 재료를 준비해요.\n2. 레시피대로 조리해요.\n3. 오늘도 맛있게 냠냠!',
+        '1. 재료를 꺼내요.\n2. 정성껏 조리해요.\n3. 맛있게 먹어요!'
+    ];
+    // --- 키워드별 레시피 ---
+    function getRecipeByName(name) {
+        if (name.includes('볶음')) {
+            return '1. 고기와 야채를 준비해요.\n2. 재료를 달군 팬에 볶아요.\n3. 양념을 넣고 한 번 더 볶아 맛있게 완성해요!';
+        } else if (name.includes('찌개')) {
+            return '1. 재료를 손질해요.\n2. 냄비에 재료와 물을 넣고 끓여요.\n3. 양념을 넣고 푹 끓여 맛있게 먹어요!';
+        } else if (name.includes('덮밥')) {
+            return '1. 밥을 준비해요.\n2. 고기와 야채를 볶아 소스를 넣어요.\n3. 밥 위에 올려 맛있게 먹어요!';
+        } else if (name.includes('샐러드')) {
+            return '1. 신선한 야채와 과일을 손질해요.\n2. 먹기 좋게 썰어요.\n3. 드레싱을 뿌려 섞어 먹어요!';
+        } else if (name.includes('볶음밥')) {
+            return '1. 밥과 야채, 고기를 준비해요.\n2. 팬에 재료를 볶아요.\n3. 간을 맞추고 맛있게 먹어요!';
+        } else if (name.includes('오므라이스')) {
+            return '1. 볶음밥을 만들어요.\n2. 계란을 풀어 부드럽게 익혀요.\n3. 볶음밥을 계란으로 감싸 완성해요!';
+        } else if (name.includes('라면')) {
+            return '1. 냄비에 물을 끓여요.\n2. 면과 스프, 재료를 넣고 끓여요.\n3. 그릇에 담아 맛있게 먹어요!';
+        } else if (name.includes('토스트')) {
+            return '1. 식빵을 토스터에 구워요.\n2. 잼이나 버터를 발라요.\n3. 따뜻할 때 먹어요!';
+        } else if (name.includes('샌드위치')) {
+            return '1. 식빵에 다양한 재료를 올려요.\n2. 다른 식빵으로 덮어요.\n3. 반으로 잘라 맛있게 먹어요!';
+        } else if (name.includes('파스타')) {
+            return '1. 파스타 면을 삶아요.\n2. 소스와 함께 볶거나 끓여요.\n3. 예쁘게 담아 먹어요!';
+        } else if (name.includes('스테이크')) {
+            return '1. 고기를 소금, 후추로 간해요.\n2. 팬에 노릇하게 구워요.\n3. 소스를 곁들여 먹어요!';
+        } else if (name.includes('카레')) {
+            return '1. 고기와 야채를 썰어요.\n2. 냄비에 볶다가 물과 카레를 넣어요.\n3. 밥 위에 부어 먹어요!';
+        } else if (name.includes('국수') || name.includes('우동')) {
+            return '1. 면을 삶아요.\n2. 육수와 고명을 준비해요.\n3. 그릇에 담아 맛있게 먹어요!';
+        } else if (name.includes('피자')) {
+            return '1. 도우에 소스와 치즈, 토핑을 올려요.\n2. 오븐에 구워요.\n3. 먹기 좋게 잘라 먹어요!';
+        } else if (name.includes('탕')) {
+            return '1. 재료를 손질해요.\n2. 냄비에 넣고 푹 끓여요.\n3. 간을 맞춰 맛있게 먹어요!';
+        } else if (name.includes('구이')) {
+            return '1. 재료를 손질해요.\n2. 오븐이나 팬에 구워요.\n3. 따뜻할 때 먹어요!';
+        } else if (name.includes('전골')) {
+            return '1. 재료를 손질해요.\n2. 냄비에 육수와 함께 끓여요.\n3. 푸짐하게 담아 먹어요!';
+        } else if (name.includes('전')) {
+            return '1. 반죽을 만들고 재료를 넣어요.\n2. 팬에 노릇하게 부쳐요.\n3. 간장에 찍어 먹어요!';
+        } else if (name.includes('김밥')) {
+            return '1. 김 위에 밥과 재료를 올려요.\n2. 돌돌 말아요.\n3. 한입 크기로 썰어 먹어요!';
+        } else if (name.includes('빵')) {
+            return '1. 빵을 준비해요.\n2. 원하는 재료를 곁들여요.\n3. 맛있게 먹어요!';
+        }
+        // 기본값: 랜덤 귀여운 문구
+        return recipePatterns[Math.floor(Math.random() * recipePatterns.length)];
+    }
     const result = [...baseList];
     let usedNames = new Set(baseList.map(m => m.name));
     for (let i = baseList.length; i < 100; i++) {
@@ -600,7 +654,7 @@ function generateMenuList(baseList, mealType) {
             price: price,
             time: `${5 + Math.floor(Math.random()*30)}분`,
             description: `귀엽고 든든한 ${n}로 ${descMap[mealType]}`,
-            recipe: `1. 재료를 준비해요.\n2. 정성껏 조리해요.\n3. 맛있게 먹어요!`,
+            recipe: getRecipeByName(n),
             image: emoji
         });
     }

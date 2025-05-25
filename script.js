@@ -195,6 +195,7 @@ function goBack() {
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
         document.getElementById('menuRecommend').classList.add('active');
     }
+    window.scrollTo(0, 0); // 뒤로가기 시 항상 맨 위로 이동
 }
 
 // 홈으로 가기
@@ -709,7 +710,7 @@ function showFavoritesScreen() {
         <body>
             <div class="favorites-container">
                 <div class="favorites-header">
-                    <button class="close-btn" onclick="window.close()">← 뒤로가기</button>
+                    <button class="close-btn" onclick="window.opener.scrollTo(0,0); window.close()">← 뒤로가기</button>
                     <h2 class="favorites-title">⭐ 즐겨찾기 전체 리스트</h2>
                 </div>
                 <div class="favorites-list" id="favoritesList"></div>

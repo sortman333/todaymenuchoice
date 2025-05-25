@@ -5,23 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>오늘의 메뉴 선택</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1>오늘의 메뉴 선택</h1>
-        <div class="menu-container">
-            <div class="menu-list">
-                <h2>메뉴 목록</h2>
-                <div class="menu-items">
-                    <input type="text" id="menuInput" placeholder="메뉴를 입력하세요">
-                    <button onclick="addMenu()">추가</button>
-                </div>
-                <ul id="menuList"></ul>
+        <div id="mealTimeSelection" class="screen active">
+            <h1>언제 식사하실 예정인가요?</h1>
+            <div class="meal-buttons">
+                <button onclick="selectMealTime('breakfast')" class="meal-button">
+                    <span class="meal-icon">🌅</span>
+                    <span class="meal-text">아침</span>
+                </button>
+                <button onclick="selectMealTime('lunch')" class="meal-button">
+                    <span class="meal-icon">☀️</span>
+                    <span class="meal-text">점심</span>
+                </button>
+                <button onclick="selectMealTime('dinner')" class="meal-button">
+                    <span class="meal-icon">🌙</span>
+                    <span class="meal-text">저녁</span>
+                </button>
             </div>
-            <div class="result-container">
-                <h2>오늘의 메뉴</h2>
-                <div id="result" class="result">?</div>
-                <button onclick="selectMenu()" class="select-button">메뉴 선택하기</button>
+        </div>
+
+        <div id="menuSelection" class="screen">
+            <div class="header">
+                <button onclick="goBack()" class="back-button">←</button>
+                <h2 id="mealTimeTitle">메뉴 선택</h2>
+            </div>
+            <div class="menu-container">
+                <div class="menu-list">
+                    <ul id="menuList"></ul>
+                </div>
+                <div class="result-container">
+                    <h3>추천 메뉴</h3>
+                    <div id="result" class="result">
+                        <div class="result-placeholder">?</div>
+                    </div>
+                    <div id="menuDetails" class="menu-details">
+                        <div class="detail-item">
+                            <span class="detail-label">칼로리</span>
+                            <span id="resultCalorie" class="detail-value">-</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">가격</span>
+                            <span id="resultPrice" class="detail-value">-</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">조리시간</span>
+                            <span id="resultTime" class="detail-value">-</span>
+                        </div>
+                        <div class="detail-item description">
+                            <span id="resultDescription" class="detail-value">-</span>
+                        </div>
+                    </div>
+                    <button onclick="selectMenu()" class="select-button">메뉴 선택하기</button>
+                </div>
             </div>
         </div>
     </div>

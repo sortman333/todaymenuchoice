@@ -151,66 +151,6 @@ function goBack() {
     renderHome();
 }
 
-// 메뉴 추가 함수
-function addMenu() {
-    const menuInput = document.getElementById('menuInput');
-    const calorieInput = document.getElementById('calorieInput');
-    const priceInput = document.getElementById('priceInput');
-    
-    const menu = menuInput.value.trim();
-    const calorie = calorieInput.value.trim();
-    const price = priceInput.value.trim();
-    
-    if (menu) {
-        const menuItem = {
-            name: menu,
-            calorie: calorie ? parseInt(calorie) : null,
-            price: price ? parseInt(price) : null
-        };
-        
-        menus[currentMealTime].push(menuItem);
-        menuInput.value = '';
-        calorieInput.value = '';
-        priceInput.value = '';
-        updateMenuList();
-        saveMenus();
-    }
-}
-
-// 메뉴 목록 업데이트 함수
-function updateMenuList() {
-    const menuList = document.getElementById('menuList');
-    menuList.innerHTML = '';
-    
-    const menus = JSON.parse(localStorage.getItem('menus'))[currentMealTime];
-    
-    menus.forEach((menu, index) => {
-        const li = document.createElement('li');
-        li.innerHTML = `
-            <div class="menu-info">
-                <div class="menu-header">
-                    <span class="menu-emoji">${menu.image}</span>
-                    <span class="menu-name">${menu.name}</span>
-                </div>
-                <div class="menu-details">
-                    <span class="menu-calorie">${menu.calorie}kcal</span>
-                    <span class="menu-price">${menu.price.toLocaleString()}원</span>
-                    <span class="menu-time">${menu.time}</span>
-                </div>
-                <div class="menu-description">${menu.description}</div>
-            </div>
-        `;
-        menuList.appendChild(li);
-    });
-}
-
-// 메뉴 삭제 함수
-function removeMenu(index) {
-    menus[currentMealTime].splice(index, 1);
-    updateMenuList();
-    saveMenus();
-}
-
 // 메뉴 선택 함수
 function selectMenu() {
     const menus = JSON.parse(localStorage.getItem('menus'))[currentMealTime];
@@ -248,13 +188,6 @@ function selectMenu() {
 function saveMenus() {
     localStorage.setItem('menus', JSON.stringify(menus));
 }
-
-// Enter 키로 메뉴 추가
-document.getElementById('menuInput').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
-        addMenu();
-    }
-});
 
 // --- Utility ---
 function pickRandomIndex(arr, excludeIdx = null) {

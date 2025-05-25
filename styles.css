@@ -53,6 +53,10 @@ body.dark {
     display: none;
     padding: 2rem 1.2rem 1rem 1.2rem;
     min-height: 100vh;
+    background: var(--bg-main);
+    border-radius: 32px;
+    box-shadow: var(--shadow-card);
+    transition: background 0.3s;
 }
 
 .screen.active {

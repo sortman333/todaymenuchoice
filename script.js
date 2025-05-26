@@ -57,7 +57,7 @@ function renderFavoritesScreen() {
 
 // 다크모드 토글
 function toggleDarkMode() {
-    document.body.classList.toggle('dark-mode');
+    document.body.classList.toggle('dark');
     const btn = document.getElementById('darkModeBtn');
-    btn.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+    btn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
 }

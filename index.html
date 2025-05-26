@@ -9,9 +9,6 @@
     <style>
         body { font-family: sans-serif; margin: 40px; }
         #recommend-card { border: 1px solid #ccc; padding: 24px; border-radius: 8px; max-width: 400px; }
-        #nearby-btn { margin-top: 16px; }
-        #restaurant-list { margin-top: 24px; }
-        .restaurant { margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid #eee; }
     </style>
 </head>
 <body>
@@ -67,26 +64,5 @@
         </div>
     </div>
     <script src="script.js"></script>
-    <script>
-    document.getElementById('nearby-btn').onclick = async function() {
-        const keyword = '갈비찜';
-        // API 엔드포인트는 환경 변수로 관리되어야 합니다
-        const apiEndpoint = process.env.API_ENDPOINT || '/api/search';
-        const res = await fetch(`${apiEndpoint}?keyword=${encodeURIComponent(keyword)}`);
-        const data = await res.json();
-        const listDiv = document.getElementById('restaurant-list');
-        if (Array.isArray(data) && data.length > 0) {
-            listDiv.innerHTML = data.map(r => `
-                <div class="restaurant">
-                    <b>${r.title.replace(/<[^>]+>/g, '')}</b><br>
-                    주소: ${r.roadAddress}<br>
-                    전화번호: ${r.telephone || '정보 없음'}
-                </div>
-            `).join('');
-        } else {
-            listDiv.innerHTML = '<i>근처 식당 정보를 찾을 수 없습니다.</i>';
-        }
-    };
-    </script>
 </body>
 </html> 

@@ -1,5 +1,10 @@
 # 🍽️ 오늘 뭐 먹지? - 귀여운 식사 추천 웹앱
 
+## 🚪 접속 주소
+
+- 로컬 테스트: [http://localhost:8001](http://localhost:8001)
+- (배포 후) 예시: https://your-github-id.github.io/your-repo-name/
+
 귀여운 UI와 부드러운 애니메이션으로 오늘의 식사를 추천해주는 웹 애플리케이션입니다.
 
 실제 배포(공개) 주소: [https://sortman333.github.io/todaymenuchoice/](https://sortman333.github.io/todaymenuchoice/)

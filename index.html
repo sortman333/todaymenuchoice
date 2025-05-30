@@ -45,18 +45,50 @@
             <div class="recommend-card" id="recommendCard">
                 <!-- JS로 추천 메뉴 정보 렌더링 -->
             </div>
-            <!-- 쿠팡 파트너스 로켓프레시 배너 시작 -->
+            <!-- 쿠팡 파트너스 반응형 배너 시작 -->
             <script src="https://ads-partners.coupang.com/g.js"></script>
             <script>
+              function renderCoupangBanner() {
+                // 기존 배너가 있으면 삭제
+                var old = document.getElementById('coupang-banner');
+                if (old) old.remove();
+
+                // 화면 너비에 따라 배너 크기 결정
+                var width, height;
+                if (window.innerWidth <= 480) { // 모바일
+                  width = 320; height = 100;
+                } else if (window.innerWidth <= 800) { // 태블릿/작은 PC
+                  width = 468; height = 60;
+                } else { // 데스크탑
+                  width = 728; height = 90;
+                }
+
+                // 배너 컨테이너 생성
+                var div = document.createElement('div');
+                div.id = 'coupang-banner';
+                document.currentScript.parentNode.insertBefore(div, document.currentScript);
+
+                // 배너 삽입
                 new PartnersCoupang.G({
-                    "id": 871400,
-                    "template": "banner",
-                    "trackingCode": "AF7874247",
-                    "width": "728",
-                    "height": "90"
+                  "id": 871400,
+                  "template": "banner",
+                  "trackingCode": "AF7874247",
+                  "width": width.toString(),
+                  "height": height.toString(),
+                  "container": "#coupang-banner"
                 });
+              }
+
+              // 최초 실행
+              renderCoupangBanner();
+              // 창 크기 변경 시 재실행 (디바운스)
+              var resizeTimer;
+              window.addEventListener('resize', function() {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(renderCoupangBanner, 300);
+              });
             </script>
-            <!-- 쿠팡 파트너스 로켓프레시 배너 끝 -->
+            <!-- 쿠팡 파트너스 반응형 배너 끝 -->
             <button onclick="showOtherMenus()" class="other-menu-btn">이 음식이 싫어요! 다른 음식은 어떤가요?</button>
         </div>
 

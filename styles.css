@@ -1,15 +1,15 @@
 :root {
-    --bg-main: linear-gradient(135deg, #f8e8ee 0%, #e0f7fa 100%);
+    --bg-main: linear-gradient(135deg, #ffe6f0 0%, #e6f0ff 100%);
     --bg-card: #fff;
     --bg-card-soft: #fff6fa;
     --bg-btn: #fff6fa;
     --bg-btn-hover: #ffe0f0;
     --text-main: #222;
-    --text-accent: #7b5fc0;
+    --text-accent: #ff6b9c;
     --text-soft: #555;
-    --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.12);
-    --shadow-card: 0 4px 24px 0 rgba(123, 95, 192, 0.10);
-    --shadow-btn: 0 2px 8px 0 rgba(123, 95, 192, 0.10);
+    --shadow: 0 8px 32px 0 rgba(255, 107, 156, 0.12);
+    --shadow-card: 0 4px 24px 0 rgba(255, 107, 156, 0.10);
+    --shadow-btn: 0 2px 8px 0 rgba(255, 107, 156, 0.10);
 }
 
 body {
@@ -24,17 +24,17 @@ body {
 }
 
 body.dark {
-    --bg-main: linear-gradient(135deg, #23243a 0%, #3a2e4d 100%);
+    --bg-main: linear-gradient(135deg, #2d1b3d 0%, #1b2d3d 100%);
     --bg-card: #2d2e3e;
     --bg-card-soft: #3a2e4d;
     --bg-btn: #3a2e4d;
     --bg-btn-hover: #4a3e5e;
     --text-main: #f8e8ee;
-    --text-accent: #e0b3ff;
+    --text-accent: #ff9eb3;
     --text-soft: #bdb6d6;
-    --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
-    --shadow-card: 0 4px 24px 0 rgba(224, 179, 255, 0.10);
-    --shadow-btn: 0 2px 8px 0 rgba(224, 179, 255, 0.10);
+    --shadow: 0 8px 32px 0 rgba(255, 158, 179, 0.18);
+    --shadow-card: 0 4px 24px 0 rgba(255, 158, 179, 0.10);
+    --shadow-btn: 0 2px 8px 0 rgba(255, 158, 179, 0.10);
 }
 
 .container {
@@ -42,7 +42,7 @@ body.dark {
     width: 100%;
     min-height: 100vh;
     background: var(--bg-card);
-    border-radius: 32px;
+    border-radius: 40px;
     box-shadow: var(--shadow);
     position: relative;
     padding-bottom: 2rem;
@@ -54,7 +54,7 @@ body.dark {
     padding: 2rem 1.2rem 1rem 1.2rem;
     min-height: 100vh;
     background: var(--bg-main);
-    border-radius: 32px;
+    border-radius: 40px;
     box-shadow: var(--shadow-card);
     transition: background 0.3s;
 }
@@ -86,18 +86,37 @@ h1 {
     padding: 1.5rem;
     background: var(--bg-card-soft);
     border: none;
-    border-radius: 24px;
+    border-radius: 30px;
     cursor: pointer;
-    transition: box-shadow 0.2s, background 0.2s;
+    transition: all 0.3s ease;
     width: 100%;
     box-shadow: var(--shadow-btn);
     font-size: 1.2rem;
     color: var(--text-main);
+    position: relative;
+    overflow: hidden;
 }
 
 .meal-button:hover {
     background: var(--bg-btn-hover);
-    box-shadow: 0 4px 20px 0 rgba(255, 182, 193, 0.18);
+    box-shadow: 0 4px 20px 0 rgba(255, 107, 156, 0.18);
+    transform: translateY(-2px);
+}
+
+.meal-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s;
+}
+
+.meal-button:hover::before {
+    transform: translateX(100%);
 }
 
 .meal-icon {
@@ -117,25 +136,49 @@ h1 {
     gap: 0.5rem;
 }
 
-.back-button {
-    background: none;
-    border: none;
+.header h2 {
+    margin: 0;
     font-size: 1.5rem;
-    cursor: pointer;
-    padding: 0.5rem;
     color: var(--text-accent);
-    margin-right: 0.5rem;
+}
+
+.back-button {
+    background: var(--bg-btn);
+    border: none;
+    border-radius: 16px;
+    font-size: 1.1rem;
+    padding: 0.4rem 0.8rem;
+    box-shadow: var(--shadow-btn);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
 }
 
 .recommend-card {
     background: var(--bg-card);
-    border-radius: 32px;
+    border-radius: 40px;
     box-shadow: var(--shadow-card);
     padding: 2rem 1.2rem 1.5rem 1.2rem;
     margin-bottom: 1.5rem;
     text-align: center;
-    transition: box-shadow 0.2s, background 0.3s;
+    transition: all 0.3s ease;
     position: relative;
+    overflow: hidden;
+}
+
+.recommend-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s;
+}
+
+.recommend-card:hover::before {
+    transform: translateX(100%);
 }
 
 .recommend-card .menu-emoji {
@@ -176,21 +219,17 @@ h1 {
 }
 
 .fav-btn {
-    background: none;
+    background: var(--bg-btn);
     border: none;
-    font-size: 1.2rem;
-    color: var(--text-accent);
-    cursor: pointer;
-    margin-bottom: 0.5rem;
-    margin-top: 0.5rem;
-    padding: 0.6rem 1.1rem;
-    border-radius: 18px;
-    transition: color 0.2s, background 0.2s;
+    border-radius: 16px;
+    font-size: 1.1rem;
+    padding: 0.4rem 0.8rem;
     box-shadow: var(--shadow-btn);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
 }
 
 .fav-btn:hover {
-    color: #ffb300;
     background: var(--bg-btn-hover);
 }
 
@@ -227,20 +266,37 @@ body.dark .other-menu-btn {
 
 .other-menu-card {
     background: var(--bg-card);
-    border-radius: 24px;
+    border-radius: 30px;
     box-shadow: var(--shadow-card);
     padding: 1.2rem 1rem 1rem 1rem;
     width: 160px;
     text-align: center;
     margin-bottom: 0.5rem;
-    transition: box-shadow 0.2s, transform 0.2s, background 0.3s;
+    transition: all 0.3s ease;
     cursor: pointer;
     position: relative;
     color: var(--text-main);
+    overflow: hidden;
+}
+
+.other-menu-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s;
+}
+
+.other-menu-card:hover::before {
+    transform: translateX(100%);
 }
 
 .other-menu-card:hover {
-    box-shadow: 0 6px 24px 0 rgba(123, 95, 192, 0.18);
+    box-shadow: 0 6px 24px 0 rgba(255, 107, 156, 0.18);
     transform: translateY(-4px) scale(1.04);
 }
 
@@ -433,35 +489,39 @@ body.dark .other-menu-btn {
 
 .darkmode-btn {
     position: absolute;
-    top: 18px;
-    right: 18px;
-    z-index: 10;
+    top: 20px;
+    right: 20px;
     background: var(--bg-btn);
-    color: var(--text-accent);
     border: none;
-    border-radius: 50%;
-    width: 44px;
-    height: 44px;
-    font-size: 1.5rem;
+    border-radius: 16px;
+    font-size: 1.1rem;
+    padding: 0.4rem 0.8rem;
     box-shadow: var(--shadow-btn);
     cursor: pointer;
     transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    z-index: 100;
 }
 
-.darkmode-btn:hover {
+.home-btn, .fav-btn {
+    background: var(--bg-btn);
+    border: none;
+    border-radius: 16px;
+    font-size: 1.1rem;
+    padding: 0.4rem 0.8rem;
+    box-shadow: var(--shadow-btn);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.fav-btn:hover {
     background: var(--bg-btn-hover);
-    color: #ffb300;
 }
 
 .fav-share-row {
     display: flex;
     justify-content: center;
-    gap: 0.7rem;
-    margin-bottom: 0.7rem;
-    margin-top: 0;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
 }
 
 .share-btn {
@@ -524,12 +584,15 @@ body.dark .fav-btn, body.dark .share-btn, body.dark .again-btn, body.dark .home-
     color: #ffb300;
     box-shadow: 0 4px 16px 0 rgba(255, 182, 193, 0.13);
 }
-.recommend-card .again-btn {
+.fav-share-row {
+    display: flex;
+    justify-content: center;
+    gap: 0.7rem;
+    margin-bottom: 1.2rem;
     margin-top: 0.7rem;
-    margin-bottom: 0;
 }
-.recommend-card .home-btn {
-    margin-top: 0.7rem;
+.recommend-card {
+    margin-bottom: 2.2rem;
 }
 #introScreen {
     display: flex;
@@ -543,6 +606,9 @@ body.dark .fav-btn, body.dark .share-btn, body.dark .again-btn, body.dark .home-
     padding: 2.5rem 1.2rem 2rem 1.2rem;
     text-align: center;
     animation: fadeIn 0.7s;
+}
+#introScreen.active {
+    display: flex;
 }
 #introScreen .intro-emoji {
     font-size: 3.5rem;
@@ -712,4 +778,113 @@ body.dark .sort-btn {
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
+}
+
+.settings-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: var(--bg-btn);
+    border: none;
+    border-radius: 16px;
+    font-size: 1.2rem;
+    padding: 0.4rem 0.8rem;
+    box-shadow: var(--shadow-btn);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    z-index: 101;
+    min-width: 36px;
+    min-height: 36px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#favBtnTop {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: var(--bg-btn);
+    border: none;
+    border-radius: 16px;
+    font-size: 1.2rem;
+    padding: 0.4rem 0.8rem;
+    box-shadow: var(--shadow-btn);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    z-index: 101;
+    min-width: 36px;
+    min-height: 36px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.settings-btn:hover, #favBtnTop:hover {
+    background: var(--bg-btn-hover);
+}
+
+.settings-modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.25);
+}
+.settings-modal-content {
+    background: var(--bg-card);
+    padding: 2rem 2.2rem 1.5rem 2.2rem;
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+    min-width: 260px;
+    text-align: center;
+    position: relative;
+}
+.settings-modal-content h2 {
+    margin-top: 0;
+    margin-bottom: 1.2rem;
+    color: var(--text-accent);
+    font-size: 1.3rem;
+}
+.settings-modal-content button {
+    display: block;
+    width: 100%;
+    margin: 0.7rem 0;
+    padding: 0.7rem 0;
+    font-size: 1.08rem;
+    border-radius: 14px;
+    border: none;
+    background: var(--bg-btn);
+    color: var(--text-accent);
+    box-shadow: var(--shadow-btn);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+.settings-modal-content button:hover {
+    background: var(--bg-btn-hover);
+    color: #ffb300;
+}
+.settings-modal-content .close {
+    position: absolute;
+    top: 1rem;
+    right: 1.2rem;
+    font-size: 1.5rem;
+    color: var(--text-soft);
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.settings-modal-content .close:hover {
+    color: var(--text-accent);
+}
+
+#menuRecommend {
+    padding-top: 6rem;
+}
+#mealTimeSelection {
+    padding-top: 6rem;
 } 

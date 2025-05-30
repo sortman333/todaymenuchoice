@@ -3,41 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>오메추 - 오늘의 메뉴 추천</title>
+    <title>오늘의 메뉴 선택</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: sans-serif; margin: 40px; }
-        #recommend-card { border: 1px solid #ccc; padding: 24px; border-radius: 8px; max-width: 400px; }
-    </style>
 </head>
 <body>
     <div class="container">
-        <button id="darkModeBtn" class="darkmode-btn" onclick="toggleDarkMode()" title="다크모드 전환">🌙</button>
+        <button id="settingsBtn" class="settings-btn" onclick="openSettings()" title="설정">⚙️</button>
+        <button id="favBtnTop" class="fav-btn" onclick="showFavoritesScreen()" title="즐겨찾기">⭐</button>
+        <button id="darkModeBtn" class="darkmode-btn" onclick="toggleDarkMode()" title="다크모드 전환" style="display:none;">🌛</button>
+        
         <div id="introScreen" class="screen active">
-            <div class="intro-emoji" style="font-size:3.5rem; margin-bottom:1.2rem;">🍽️</div>
-            <h1 style="font-size:2.1rem; color:var(--text-accent); margin-bottom:1.2rem;">당신의 식사를 책임집니다</h1>
-            <div style="text-align:center; margin-bottom:2.2rem; color:var(--text-soft); font-size:1.1rem;">오늘의 메뉴를 귀엽게 추천해드릴게요!</div>
+            <div class="intro-emoji" style="font-size:3rem; margin-bottom:1rem;">🍽️</div>
+            <h1 style="font-size:1.8rem; color:var(--text-accent); margin-bottom:1rem;">당신의 식사를 책임집니다</h1>
+            <div style="text-align:center; margin-bottom:2rem; color:var(--text-soft); font-size:1rem;">오늘의 메뉴를 귀엽게 추천해드릴게요!</div>
             <button class="today-btn" style="margin-top:0.5rem;" onclick="startApp()">시작하기</button>
         </div>
 
         <div id="mealTimeSelection" class="screen">
-            <div style="position:absolute; top:24px; left:24px; z-index:11; display:flex; gap:0.5rem;">
-                <button onclick="goHome()" class="home-btn">🏠</button>
-                <button onclick="renderFavoritesScreen()" class="fav-btn" style="font-size:1.3rem; padding:0.6rem 1.1rem;">⭐ 즐겨찾기 전체 보기</button>
-            </div>
-            <h1>언제 식사하실 예정인가요?</h1>
+            <h1 style="font-size:1.8rem;">언제 식사하실 예정인가요?</h1>
             <div class="meal-buttons">
-                <button onclick="selectMealTime('breakfast')" class="meal-button" style="font-family: 'Jua', 'Gowun Dodum', sans-serif; font-size: 1.25rem;">아침</button>
-                <button onclick="selectMealTime('lunch')" class="meal-button" style="font-family: 'Jua', 'Gowun Dodum', sans-serif; font-size: 1.25rem;">점심</button>
-                <button onclick="selectMealTime('dinner')" class="meal-button" style="font-family: 'Jua', 'Gowun Dodum', sans-serif; font-size: 1.25rem;">저녁</button>
+                <button onclick="selectMealTime('breakfast')" class="meal-button" style="font-family: 'Jua', 'Gowun Dodum', sans-serif; font-size: 1.1rem;">아침</button>
+                <button onclick="selectMealTime('lunch')" class="meal-button" style="font-family: 'Jua', 'Gowun Dodum', sans-serif; font-size: 1.1rem;">점심</button>
+                <button onclick="selectMealTime('dinner')" class="meal-button" style="font-family: 'Jua', 'Gowun Dodum', sans-serif; font-size: 1.1rem;">저녁</button>
             </div>
         </div>
 
         <div id="favoritesScreen" class="screen">
             <div class="header">
                 <button onclick="goHome()" class="home-btn">🏠 홈으로</button>
-                <h2 style="margin-left:0.5rem; color:var(--text-accent);">⭐ 즐겨찾기 전체 리스트</h2>
+                <h2 style="margin-left:0.5rem; color:var(--text-accent); font-size:1.5rem;">⭐ 즐겨찾기 전체 리스트</h2>
             </div>
             <div id="favoritesList" class="other-menu-list"></div>
         </div>
@@ -45,7 +40,7 @@
         <div id="menuRecommend" class="screen">
             <div class="header">
                 <button onclick="goBack()" class="back-button">←</button>
-                <h2 id="mealTimeTitle">메뉴 추천</h2>
+                <h2 id="mealTimeTitle" style="font-size:1.5rem;">메뉴 추천</h2>
             </div>
             <div class="recommend-card" id="recommendCard">
                 <!-- JS로 추천 메뉴 정보 렌더링 -->
@@ -56,11 +51,32 @@
         <div id="otherMenus" class="screen">
             <div class="header">
                 <button onclick="goBack()" class="back-button">←</button>
-                <h2>다른 추천 메뉴</h2>
+                <h2 style="font-size:1.5rem;">다른 추천 메뉴</h2>
             </div>
             <div class="other-menu-list" id="otherMenuList">
                 <!-- JS로 나머지 메뉴 카드 렌더링 -->
             </div>
+        </div>
+
+        <div id="loadingScreen" class="screen">
+            <div class="loading-container">
+                <div class="loading-text" data-ko="두구두구..." data-en="Drum roll...">두구두구...</div>
+                <div class="loading-dots">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 설정 팝업(모달) -->
+    <div id="settingsModal" class="settings-modal" style="display:none;">
+        <div class="settings-modal-content">
+            <span class="close" onclick="closeSettings()">&times;</span>
+            <h2 id="settingsTitle">설정</h2>
+            <button id="modalDarkModeBtn" onclick="toggleDarkMode()">다크모드</button>
+            <button id="langToggleBtn" onclick="toggleLanguage()">English</button>
         </div>
     </div>
     <script src="script.js"></script>

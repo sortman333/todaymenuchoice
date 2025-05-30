@@ -2,6 +2,8 @@
 
 귀여운 UI와 부드러운 애니메이션으로 오늘의 식사를 추천해주는 웹 애플리케이션입니다.
 
+실제 배포(공개) 주소: [https://sortman333.github.io/todaymenuchoice/](https://sortman333.github.io/todaymenuchoice/)
+
 ## ✨ 주요 기능
 
 - 🌅 아침/점심/저녁 식사 추천

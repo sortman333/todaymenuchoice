@@ -1,4 +1,3 @@
-alert('script.js loaded!');
 // 메뉴 데이터 (20개씩, 예시)
 const menuData = {
     breakfast: [
